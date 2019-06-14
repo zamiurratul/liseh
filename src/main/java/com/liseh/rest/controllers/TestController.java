@@ -10,7 +10,7 @@ public class TestController {
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     String getName(){
-        return "Liseh Test";
+        return "Project Liseh is running...";
     }
 
 }
