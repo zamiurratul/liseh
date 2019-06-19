@@ -1,9 +1,9 @@
-package com.liseh.rest.controller;
+package com.liseh.bll.rest.controller;
 
-import com.liseh.exception.BaseException;
-import com.liseh.model.common.GenericResponse;
-import com.liseh.model.dto.PreRegistrationDto;
-import com.liseh.service.PreRegistrationService;
+import com.liseh.bll.model.common.GenericResponse;
+import com.liseh.bll.model.dto.PreRegistrationDto;
+import com.liseh.bll.service.PreRegistrationService;
+import com.liseh.bll.exception.BaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

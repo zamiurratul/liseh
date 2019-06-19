@@ -1,6 +1,6 @@
-package com.liseh.model.dto;
+package com.liseh.bll.model.dto;
 
-import com.liseh.model.common.BaseDto;
+import com.liseh.bll.model.common.BaseDto;
 import lombok.Data;
 
 @Data

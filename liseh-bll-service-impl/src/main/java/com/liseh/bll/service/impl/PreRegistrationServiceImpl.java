@@ -1,8 +1,8 @@
-package com.liseh.service.impl;
+package com.liseh.bll.service.impl;
 
-import com.liseh.model.common.GenericResponse;
-import com.liseh.model.dto.PreRegistrationDto;
-import com.liseh.service.PreRegistrationService;
+import com.liseh.bll.model.common.GenericResponse;
+import com.liseh.bll.model.dto.PreRegistrationDto;
+import com.liseh.bll.service.PreRegistrationService;
 import org.springframework.stereotype.Service;
 
 @Service

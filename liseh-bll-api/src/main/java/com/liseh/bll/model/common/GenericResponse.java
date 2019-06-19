@@ -1,4 +1,4 @@
-package com.liseh.model.common;
+package com.liseh.bll.model.common;
 
 import lombok.Data;
 
