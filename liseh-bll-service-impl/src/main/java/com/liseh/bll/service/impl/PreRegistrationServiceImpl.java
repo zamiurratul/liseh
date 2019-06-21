@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PreRegistrationServiceImpl implements PreRegistrationService {
     @Override
-    public GenericResponse preRegistration(PreRegistrationDto preRegistrationDto) {
+    public GenericResponse preRegister(PreRegistrationDto preRegistrationDto) {
         return GenericResponse.mockSuccessResponse();
     }
 }
