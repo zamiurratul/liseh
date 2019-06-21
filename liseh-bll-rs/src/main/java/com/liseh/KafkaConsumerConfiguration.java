@@ -32,16 +32,16 @@ public class KafkaConsumerConfiguration {
     @Autowired
     private ProducerFactory<String, GenericKafkaObject> producerFactory;
 
-    @Bean
-    public ConsumerFactory<String, GenericKafkaObject> consumerFactory() {
+    private Map<String, Object> consumerConfigs(){
         Map<String, Object> configs = new HashMap<>();
         configs.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootStrapServers);
         configs.put(ConsumerConfig.GROUP_ID_CONFIG, consumerGroup);
-        configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        //TODO what is the problem here ?
-        configs.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
-        return new DefaultKafkaConsumerFactory<>(configs);
+        return configs;
+    }
+
+    @Bean
+    public ConsumerFactory<String, GenericKafkaObject> consumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(consumerConfigs(), new StringDeserializer(), new JsonDeserializer<>(GenericKafkaObject.class));
     }
 
     @Bean
@@ -61,6 +61,7 @@ public class KafkaConsumerConfiguration {
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, GenericKafkaObject> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, GenericKafkaObject> containerFactory = new ConcurrentKafkaListenerContainerFactory<>();
+        containerFactory.setConsumerFactory(consumerFactory());
         containerFactory.setReplyTemplate(kafkaReplyTemplate(producerFactory, replyContainer(consumerFactory())));
         return containerFactory;
     }
