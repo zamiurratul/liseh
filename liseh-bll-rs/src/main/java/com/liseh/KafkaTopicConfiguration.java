@@ -1,5 +1,6 @@
-package com.liseh.bll.configuration;
+package com.liseh;
 
+import com.liseh.bll.constants.KafkaConstants;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +27,6 @@ public class KafkaTopicConfiguration {
 
     @Bean
     public NewTopic registrationTopic() {
-        return new NewTopic("registration_topic", 1, (short) 1);
+        return new NewTopic(KafkaConstants.REQUEST_TOPIC_REGISTRATION, 1, (short) 1);
     }
 }

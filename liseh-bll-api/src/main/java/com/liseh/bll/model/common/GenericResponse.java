@@ -1,5 +1,6 @@
 package com.liseh.bll.model.common;
 
+import com.liseh.bll.constants.ResponseCode;
 import lombok.Data;
 
 @Data

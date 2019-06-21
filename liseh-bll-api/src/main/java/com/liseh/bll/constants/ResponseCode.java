@@ -1,4 +1,4 @@
-package com.liseh.bll.model.common;
+package com.liseh.bll.constants;
 
 public class ResponseCode {
     public static String SUCCESS = "100";

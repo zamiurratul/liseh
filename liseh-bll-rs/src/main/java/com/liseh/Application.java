@@ -1,4 +1,4 @@
-package com.liseh.bll;
+package com.liseh;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
