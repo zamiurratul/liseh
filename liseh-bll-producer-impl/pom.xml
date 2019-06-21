@@ -9,25 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>liseh-bll-service-impl</artifactId>
+    <artifactId>liseh-bll-producer-impl</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>com.liseh</groupId>
-            <artifactId>liseh-bll-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>com.liseh</groupId>
             <artifactId>liseh-bll-producer</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>com.liseh</groupId>
-            <artifactId>liseh-bll-producer-impl</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
     </dependencies>
-
 
 </project>

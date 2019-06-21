@@ -8,6 +8,8 @@
         <module>liseh-bll-rs</module>
         <module>liseh-bll-service</module>
         <module>liseh-bll-service-impl</module>
+        <module>liseh-bll-producer</module>
+        <module>liseh-bll-producer-impl</module>
     </modules>
 
     <parent>

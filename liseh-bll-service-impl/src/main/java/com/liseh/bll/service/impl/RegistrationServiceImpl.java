@@ -1,4 +1,4 @@
-package com.liseh.bll.impl.service;
+package com.liseh.bll.service.impl;
 
 import com.liseh.bll.constants.ResponseCode;
 import com.liseh.bll.exception.BaseException;

@@ -1,4 +1,4 @@
-package com.liseh.bll.impl.producer;
+package com.liseh.bll.producer.impl;
 
 import com.liseh.bll.constants.KafkaConstants;
 import com.liseh.bll.model.common.MessageProducerDto;
