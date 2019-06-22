@@ -1,5 +1,6 @@
 package com.liseh.bll.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liseh.bll.constants.ResponseCode;
 import com.liseh.bll.exception.BaseException;
 import com.liseh.bll.model.common.GenericResponse;
@@ -20,7 +21,8 @@ public class RegistrationServiceImpl implements RegistrationService {
         GenericResponse response = createGenericResponse();
 
         try {
-            response.setContent(registrationProducer.registration(String.valueOf(registrationDto)));
+            ObjectMapper objectMapper = new ObjectMapper();
+            response.setContent(registrationProducer.registration(objectMapper.writeValueAsString(registrationDto)));
         } catch (Exception e) {
             throw new BaseException(e.getMessage());
         }
