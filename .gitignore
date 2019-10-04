@@ -27,3 +27,6 @@ target/
 /nbdist/
 /.nb-gradle/
 /build/
+
+### Custom ###
+*.log
