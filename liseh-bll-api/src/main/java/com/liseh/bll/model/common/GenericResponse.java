@@ -8,20 +8,21 @@ public class GenericResponse {
     private String responseCode;
     private String description;
     private String content;
+    private Boolean isError;
+    private String errorDetails;
 
-    public static GenericResponse mockSuccessResponse(){
+    public static GenericResponse createSuccessResponse(){
         GenericResponse response = new GenericResponse();
         response.responseCode = ResponseCode.SUCCESS;
-        response.description = "Success";
-        response.content = "The request was successfully executed";
+        response.setIsError(false);
         return response;
     }
 
-    public static GenericResponse createResponseFromException(Exception e){
+    public static GenericResponse createResponseFromException(Exception ex){
         GenericResponse response = new GenericResponse();
         response.responseCode = ResponseCode.FAILED;
-        response.description = "Failed";
-        response.content = "The request failed";
+        response.setIsError(true);
+        response.setErrorDetails(ex.getMessage());
         return response;
     }
 }
