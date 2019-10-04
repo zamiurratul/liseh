@@ -30,3 +30,4 @@ target/
 
 ### Custom ###
 *.log
+*.gz
