@@ -1,9 +1,9 @@
 package com.liseh.bll.service.impl;
 
-import com.liseh.bll.UserRepository;
+import com.liseh.bll.persistence.repository.UserRepository;
 import com.liseh.bll.exception.BaseException;
-import com.liseh.bll.model.entity.Role;
-import com.liseh.bll.model.entity.User;
+import com.liseh.bll.persistence.entity.Role;
+import com.liseh.bll.persistence.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

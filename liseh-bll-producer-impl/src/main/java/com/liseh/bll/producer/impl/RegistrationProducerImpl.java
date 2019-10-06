@@ -1,7 +1,7 @@
 package com.liseh.bll.producer.impl;
 
-import com.liseh.bll.constants.KafkaConstants;
-import com.liseh.bll.model.common.MessageProducerDto;
+import com.liseh.bll.constant.KafkaConstants;
+import com.liseh.bll.common.MessageProducerDto;
 import com.liseh.bll.producer.MessageProducer;
 import com.liseh.bll.producer.RegistrationProducer;
 import org.springframework.beans.factory.annotation.Autowired;

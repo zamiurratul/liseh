@@ -1,11 +1,11 @@
 package com.liseh.bll.service.impl;
 
-import com.liseh.bll.PrivilegeRepository;
-import com.liseh.bll.RoleRepository;
-import com.liseh.bll.constants.PrivilegeType;
-import com.liseh.bll.constants.RoleType;
-import com.liseh.bll.model.entity.Privilege;
-import com.liseh.bll.model.entity.Role;
+import com.liseh.bll.persistence.repository.PrivilegeRepository;
+import com.liseh.bll.persistence.repository.RoleRepository;
+import com.liseh.bll.constant.PrivilegeType;
+import com.liseh.bll.constant.RoleType;
+import com.liseh.bll.persistence.entity.Privilege;
+import com.liseh.bll.persistence.entity.Role;
 import com.liseh.bll.service.RoleAndPrivilegeService;
 import org.springframework.stereotype.Service;
 

@@ -1,11 +1,11 @@
 package com.liseh.bll.service.impl;
 
-import com.liseh.bll.RoleRepository;
-import com.liseh.bll.UserRepository;
-import com.liseh.bll.constants.RoleType;
-import com.liseh.bll.constants.DateFormats;
-import com.liseh.bll.model.dto.UserRegistrationDto;
-import com.liseh.bll.model.entity.User;
+import com.liseh.bll.persistence.repository.RoleRepository;
+import com.liseh.bll.persistence.repository.UserRepository;
+import com.liseh.bll.constant.RoleType;
+import com.liseh.bll.constant.DateFormats;
+import com.liseh.bll.persistence.dto.UserRegistrationDto;
+import com.liseh.bll.persistence.entity.User;
 import com.liseh.bll.service.UserService;
 import com.liseh.bll.utility.CommonUtils;
 import com.liseh.bll.utility.DateUtils;

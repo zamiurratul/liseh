@@ -1,14 +1,7 @@
 package com.liseh.bll.producer.impl;
 
-import com.liseh.GenericKafkaObject;
-import com.liseh.bll.model.common.MessageProducerDto;
+import com.liseh.bll.common.MessageProducerDto;
 import com.liseh.bll.producer.MessageProducer;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.header.internals.RecordHeader;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
-import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ExecutionException;

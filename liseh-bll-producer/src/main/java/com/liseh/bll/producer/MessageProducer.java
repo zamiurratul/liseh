@@ -1,6 +1,6 @@
 package com.liseh.bll.producer;
 
-import com.liseh.bll.model.common.MessageProducerDto;
+import com.liseh.bll.common.MessageProducerDto;
 
 import java.util.concurrent.ExecutionException;
 
