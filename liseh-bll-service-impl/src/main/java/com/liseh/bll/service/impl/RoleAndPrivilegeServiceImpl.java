@@ -1,5 +1,6 @@
 package com.liseh.bll.service.impl;
 
+import com.liseh.bll.event.AppEventManager;
 import com.liseh.bll.persistence.repository.PrivilegeRepository;
 import com.liseh.bll.persistence.repository.RoleRepository;
 import com.liseh.bll.constant.PrivilegeType;
@@ -25,6 +26,8 @@ public class RoleAndPrivilegeServiceImpl implements RoleAndPrivilegeService {
 
     @PostConstruct
     public void init() {
+        AppEventManager.register(this.getClass(), "TEST_CUSTOM_EVENT", ()-> System.out.println("FROM: RoleAndPrivilegeServiceImpl"));
+
         List<Privilege> privilegeList = privilegeRepository.findAll();
         if (privilegeList.isEmpty()) {
             Privilege privilege = new Privilege(PrivilegeType.ALL);

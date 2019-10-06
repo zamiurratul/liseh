@@ -23,8 +23,8 @@
     <artifactId>liseh</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>liseh</name>
-    <description>This is an alternate social network</description>
+    <name>Liseh</name>
+    <description>An alternate social network</description>
 
     <properties>
         <java.version>1.8</java.version>

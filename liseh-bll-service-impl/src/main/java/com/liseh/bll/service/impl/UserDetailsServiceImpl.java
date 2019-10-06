@@ -1,5 +1,6 @@
 package com.liseh.bll.service.impl;
 
+import com.liseh.bll.event.AppEventManager;
 import com.liseh.bll.persistence.repository.UserRepository;
 import com.liseh.bll.exception.BaseException;
 import com.liseh.bll.persistence.entity.Role;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public UserDetailsServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @PostConstruct
+    public void init() {
+        AppEventManager.register(this.getClass(), "TEST_CUSTOM_EVENT", () -> System.out.println("FROM: UserDetailsServiceImpl"));
     }
 
     @Override
