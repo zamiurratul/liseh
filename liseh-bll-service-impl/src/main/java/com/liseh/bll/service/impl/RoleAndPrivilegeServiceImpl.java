@@ -1,0 +1,38 @@
+package com.liseh.bll.service.impl;
+
+import com.liseh.bll.PrivilegeRepository;
+import com.liseh.bll.RoleRepository;
+import com.liseh.bll.constants.PrivilegeType;
+import com.liseh.bll.constants.RoleType;
+import com.liseh.bll.model.entity.Privilege;
+import com.liseh.bll.model.entity.Role;
+import com.liseh.bll.service.RoleAndPrivilegeService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import java.util.Arrays;
+import java.util.List;
+
+@Service
+public class RoleAndPrivilegeServiceImpl implements RoleAndPrivilegeService {
+    private final RoleRepository roleRepository;
+    private final PrivilegeRepository privilegeRepository;
+
+    public RoleAndPrivilegeServiceImpl(RoleRepository roleRepository, PrivilegeRepository privilegeRepository) {
+        this.roleRepository = roleRepository;
+        this.privilegeRepository = privilegeRepository;
+    }
+
+    @PostConstruct
+    public void init() {
+        List<Privilege> privilegeList = privilegeRepository.findAll();
+        if (privilegeList.isEmpty()) {
+            Privilege privilege = new Privilege(PrivilegeType.ALL);
+            privilegeRepository.saveAndFlush(privilege);
+
+            Role role = new Role(RoleType.USER);
+            role.setPrivileges(Arrays.asList(privilege));
+            roleRepository.saveAndFlush(role);
+        }
+    }
+}

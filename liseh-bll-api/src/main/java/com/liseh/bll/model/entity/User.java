@@ -1,10 +1,12 @@
 package com.liseh.bll.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.liseh.bll.model.common.type.Gender;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -16,7 +18,9 @@ public class User {
     private Long id;
 
     private String userIdentifier;
+
     private String firstName;
+
     private String surName;
 
     @Column(unique = true)
@@ -24,6 +28,8 @@ public class User {
 
     @Column(unique = true)
     private String email;
+
+    @Column(length = 60)
     private String password;
 
     @Temporal(TemporalType.DATE)
@@ -33,7 +39,14 @@ public class User {
     private Gender gender;
 
     private Boolean isVerified;
+
     private Boolean isActive;
+
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private List<Role> roles;
+
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;

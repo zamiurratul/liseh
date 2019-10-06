@@ -1,10 +1,9 @@
 package com.liseh.bll.service.impl;
 
+import com.liseh.bll.RoleRepository;
 import com.liseh.bll.UserRepository;
+import com.liseh.bll.constants.RoleType;
 import com.liseh.bll.constants.DateFormats;
-import com.liseh.bll.constants.ResponseCode;
-import com.liseh.bll.exception.BaseException;
-import com.liseh.bll.model.common.GenericResponse;
 import com.liseh.bll.model.dto.UserRegistrationDto;
 import com.liseh.bll.model.entity.User;
 import com.liseh.bll.service.UserService;
@@ -15,13 +14,14 @@ import org.modelmapper.PropertyMap;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.Arrays;
 
 @Service
 public class UserRegistrationServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     private PropertyMap<UserRegistrationDto, User> skipFields = new PropertyMap<UserRegistrationDto, User>() {
         @Override
@@ -31,10 +31,11 @@ public class UserRegistrationServiceImpl implements UserService {
         }
     };
 
-    public UserRegistrationServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public UserRegistrationServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
         this.modelMapper.addMappings(skipFields);
     }
 
@@ -46,6 +47,7 @@ public class UserRegistrationServiceImpl implements UserService {
         user.setIsActive(true);
         user.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword()));
         user.setDateOfBirth(DateUtils.parseDate(userRegistrationDto.getDateOfBirth(), DateFormats.DD_MMM_YYYY));
+        user.setRoles(Arrays.asList(roleRepository.findByName(RoleType.USER)));
         return userRepository.save(user);
     }
 }
