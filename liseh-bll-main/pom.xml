@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>liseh-bll-rs</artifactId>
+    <artifactId>liseh-bll-main</artifactId>
 
     <dependencies>
         <dependency>

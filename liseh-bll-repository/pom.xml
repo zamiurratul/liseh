@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.liseh</groupId>
-            <artifactId>liseh-bll-api</artifactId>
+            <artifactId>liseh-bll-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

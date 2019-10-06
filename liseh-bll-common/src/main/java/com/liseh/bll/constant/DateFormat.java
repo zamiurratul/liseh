@@ -1,5 +1,5 @@
 package com.liseh.bll.constant;
 
-public class DateFormats {
+public class DateFormat {
     public static final String DD_MMM_YYYY = "dd-MMM-yyyy";
 }

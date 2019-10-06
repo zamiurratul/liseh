@@ -1,4 +1,4 @@
 package com.liseh.bll.constant;
 
-public class Constants {
+public class Constant {
 }

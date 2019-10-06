@@ -1,4 +1,4 @@
-package com.liseh.bll.configuration;
+package com.liseh.bll.config;
 
 import com.liseh.bll.interceptor.SecurityInterceptor;
 import org.springframework.context.annotation.Configuration;

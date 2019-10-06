@@ -22,7 +22,7 @@ kafka:
   consumergroup: bll-process-group
 
 logging:
-  file: ./server.log
+  file: ./logs/server.log
   level:
     root: INFO
     com.robi.redshift: DEBUG

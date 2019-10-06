@@ -1,4 +1,4 @@
-package com.liseh.bll.configuration;
+package com.liseh.bll.config;
 
 import com.liseh.bll.service.impl.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Configuration;

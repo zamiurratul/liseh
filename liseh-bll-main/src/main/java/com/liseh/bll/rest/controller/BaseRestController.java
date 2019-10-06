@@ -5,7 +5,7 @@ import com.liseh.bll.rest.interfaces.ServiceCaller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class BaseRestController {
+public abstract class BaseRestController {
     protected ResponseEntity<GenericResponse> callService(ServiceCaller serviceCaller){
         GenericResponse response = GenericResponse.createSuccessResponse();
         try {

@@ -3,7 +3,7 @@ package com.liseh.bll.service.impl;
 import com.liseh.bll.persistence.repository.RoleRepository;
 import com.liseh.bll.persistence.repository.UserRepository;
 import com.liseh.bll.constant.RoleType;
-import com.liseh.bll.constant.DateFormats;
+import com.liseh.bll.constant.DateFormat;
 import com.liseh.bll.persistence.dto.UserRegistrationDto;
 import com.liseh.bll.persistence.entity.User;
 import com.liseh.bll.service.UserService;
@@ -46,7 +46,7 @@ public class UserRegistrationServiceImpl implements UserService {
         user.setIsVerified(false);
         user.setIsActive(true);
         user.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword()));
-        user.setDateOfBirth(DateUtils.parseDate(userRegistrationDto.getDateOfBirth(), DateFormats.DD_MMM_YYYY));
+        user.setDateOfBirth(DateUtils.parseDate(userRegistrationDto.getDateOfBirth(), DateFormat.DD_MMM_YYYY));
         user.setRoles(Arrays.asList(roleRepository.findByName(RoleType.USER)));
         return userRepository.save(user);
     }

@@ -1,4 +1,4 @@
-package com.liseh.bll.configuration;
+package com.liseh.bll.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,10 +11,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-public class BeanConfig {
+public class AppBeanConfig {
     private final UserDetailsServiceImpl userDetailsService;
 
-    public BeanConfig(UserDetailsServiceImpl userDetailsService) {
+    public AppBeanConfig(UserDetailsServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 

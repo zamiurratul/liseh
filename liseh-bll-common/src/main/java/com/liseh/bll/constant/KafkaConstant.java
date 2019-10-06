@@ -1,6 +1,6 @@
 package com.liseh.bll.constant;
 
-public class KafkaConstants {
+public class KafkaConstant {
     public static String REQUEST_TOPIC_REGISTRATION = "request_topic_registration";
     public static String REPLY_TOPIC_REGISTRATION = "reply_topic_registration";
 
