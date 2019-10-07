@@ -26,7 +26,7 @@ public class RoleAndPrivilegeServiceImpl implements RoleAndPrivilegeService {
 
     @PostConstruct
     public void init() {
-        AppEventManager.register(this.getClass(), "TEST_CUSTOM_EVENT", ()-> System.out.println("FROM: RoleAndPrivilegeServiceImpl"));
+        AppEventManager.register("TEST_CUSTOM_EVENT", ()-> System.out.println("FROM: RoleAndPrivilegeServiceImpl"));
 
         List<Privilege> privilegeList = privilegeRepository.findAll();
         if (privilegeList.isEmpty()) {

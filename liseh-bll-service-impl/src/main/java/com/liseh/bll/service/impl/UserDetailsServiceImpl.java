@@ -26,7 +26,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @PostConstruct
     public void init() {
-        AppEventManager.register(this.getClass(), "TEST_CUSTOM_EVENT", () -> System.out.println("FROM: UserDetailsServiceImpl"));
+        AppEventManager.register("TEST_CUSTOM_EVENT", () -> {
+            System.out.println("FROM: UserDetailsServiceImpl");
+            throw new BaseException("jashdja");
+        });
     }
 
     @Override

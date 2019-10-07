@@ -13,7 +13,8 @@ public class VerificationToken {
     private static final int EXPIRATION = 60 * 24;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "v_token_seq_gen")
+    @SequenceGenerator(name = "v_token_seq_gen", allocationSize = 25, sequenceName = "v_token_seq")
     private Long id;
 
     private String token;

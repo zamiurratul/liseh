@@ -10,7 +10,8 @@ import java.util.List;
 @Data
 public class Privilege {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "privilege_seq_gen")
+    @SequenceGenerator(name = "privilege_seq_gen", allocationSize = 25, sequenceName = "privilege_seq")
     private Long id;
 
     private String name;

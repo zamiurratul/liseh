@@ -24,7 +24,6 @@ public class UserRegistrationController extends BaseRestController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ResponseEntity<GenericResponse> registration(@RequestBody UserRegistrationDto userRegistrationDto) {
-        AppEventManager.fire("TEST_CUSTOM_EVENT");
         return super.callService(() -> userService.registerNewUser(userRegistrationDto));
     }
 }

@@ -46,7 +46,7 @@ public class UserRegistrationServiceImpl implements UserService {
 
     @PostConstruct
     public void init() {
-        AppEventManager.register(this.getClass(), "TEST_CUSTOM_EVENT", () -> System.out.println("FROM: UserRegistrationServiceImpl"));
+        AppEventManager.register("TEST_CUSTOM_EVENT", () -> System.out.println("FROM: UserRegistrationServiceImpl"));
     }
 
     @Override
