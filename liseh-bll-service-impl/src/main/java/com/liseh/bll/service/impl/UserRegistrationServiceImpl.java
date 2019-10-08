@@ -1,13 +1,12 @@
 package com.liseh.bll.service.impl;
 
-import com.liseh.bll.event.AppEventManager;
 import com.liseh.bll.persistence.repository.RoleRepository;
 import com.liseh.bll.persistence.repository.UserRepository;
 import com.liseh.bll.constant.RoleType;
 import com.liseh.bll.constant.DateFormat;
 import com.liseh.bll.persistence.dto.UserRegistrationDto;
 import com.liseh.bll.persistence.entity.User;
-import com.liseh.bll.service.UserService;
+import com.liseh.bll.service.UserRegistrationService;
 import com.liseh.bll.utility.CommonUtils;
 import com.liseh.bll.utility.DateUtils;
 import org.modelmapper.ModelMapper;
@@ -17,10 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
 
 @Service
-public class UserRegistrationServiceImpl implements UserService {
+public class UserRegistrationServiceImpl implements UserRegistrationService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
@@ -44,22 +42,15 @@ public class UserRegistrationServiceImpl implements UserService {
         this.modelMapper.addMappings(skipFields);
     }
 
-    @PostConstruct
-    public void init() {
-        AppEventManager.register("TEST_CUSTOM_EVENT", () -> System.out.println("FROM: UserRegistrationServiceImpl"));
-    }
-
     @Override
     public User registerNewUser(UserRegistrationDto userRegistrationDto) {
-        AppEventManager.deregister(this.getClass(), "TEST_CUSTOM_EVENT");
-
         User user = modelMapper.map(userRegistrationDto, User.class);
         user.setUserIdentifier(CommonUtils.randomUUID());
         user.setIsVerified(false);
         user.setIsActive(true);
         user.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword()));
         user.setDateOfBirth(DateUtils.parseDate(userRegistrationDto.getDateOfBirth(), DateFormat.DD_MMM_YYYY));
-        user.setRoles(Arrays.asList(roleRepository.findByName(RoleType.USER)));
+        user.getRoles().add(roleRepository.findByName(RoleType.USER));
         return userRepository.save(user);
     }
 }

@@ -7,6 +7,7 @@ import lombok.ToString;
 @Data
 @ToString(callSuper = true)
 public class UserRegistrationDto {
+    private String username;
     private String firstName;
     private String surName;
     private String mobileNumber;

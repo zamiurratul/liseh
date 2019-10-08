@@ -14,6 +14,6 @@ public class TestController extends BaseRestController {
 
     @RequestMapping(value = "/test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GenericResponse> test() {
-        return super.callService(() -> AppEventManager.fire("TEST_CUSTOM_EVENT"));
+        return super.callService(() -> System.out.println("Test Controller !!!"));
     }
 }

@@ -2,9 +2,13 @@ package com.liseh.bll.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.liseh.bll.common.type.Gender;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +26,9 @@ public class User {
     private String firstName;
 
     private String surName;
+
+    @Column(unique = true)
+    private String username;
 
     @Column(unique = true)
     private String mobileNumber;
@@ -45,6 +52,8 @@ public class User {
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private List<Role> roles;
 
 
@@ -62,5 +71,12 @@ public class User {
     @PreUpdate
     public void onPreUpdate() {
         updated = new Date();
+    }
+
+
+    public List<Role> getRoles() {
+        if (roles == null)
+            roles = new ArrayList<>();
+        return roles;
     }
 }
