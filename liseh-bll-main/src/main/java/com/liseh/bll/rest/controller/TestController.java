@@ -26,13 +26,12 @@ public class TestController extends BaseRestController {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             System.out.println("User has authorities: " + userDetails.getAuthorities());
         }
-
         GenericResponse response = GenericResponse.createSuccessResponse();
         response.setDescription("Hello -from Liseh System");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/user", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GenericResponse> testUserPing() {
         GenericResponse response = GenericResponse.createSuccessResponse();
@@ -40,7 +39,7 @@ public class TestController extends BaseRestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/admin", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GenericResponse> testAdminPing() {
         GenericResponse response = GenericResponse.createSuccessResponse();

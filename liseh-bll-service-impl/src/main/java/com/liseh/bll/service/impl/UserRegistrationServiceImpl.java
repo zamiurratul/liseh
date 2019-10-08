@@ -61,7 +61,8 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         user.setIsVerified(true);
         user.setIsActive(true);
         user.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword()));
-        user.setDateOfBirth(DateUtils.parseDate("22-FEB-1992", DateFormat.DD_MMM_YYYY));
+        user.setDateOfBirth(DateUtils.parseDate("07-OCT-2019", DateFormat.DD_MMM_YYYY));
+        user.getRoles().add(roleRepository.findByName(RoleType.USER));
         user.getRoles().add(roleRepository.findByName(RoleType.ADMIN));
         return userRepository.save(user);
     }

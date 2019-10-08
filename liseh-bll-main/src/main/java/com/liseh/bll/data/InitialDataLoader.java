@@ -1,39 +1,45 @@
-package com.liseh.bll.service.impl;
+package com.liseh.bll.data;
 
-import com.liseh.bll.persistence.dto.UserRegistrationDto;
-import com.liseh.bll.persistence.repository.PrivilegeRepository;
-import com.liseh.bll.persistence.repository.RoleRepository;
 import com.liseh.bll.constant.PrivilegeType;
 import com.liseh.bll.constant.RoleType;
+import com.liseh.bll.persistence.dto.UserRegistrationDto;
 import com.liseh.bll.persistence.entity.Privilege;
 import com.liseh.bll.persistence.entity.Role;
+import com.liseh.bll.persistence.repository.PrivilegeRepository;
+import com.liseh.bll.persistence.repository.RoleRepository;
 import com.liseh.bll.persistence.repository.UserRepository;
-import com.liseh.bll.service.DataBootstrapService;
 import com.liseh.bll.service.UserRegistrationService;
 import com.liseh.bll.utility.LogUtils;
-import org.springframework.stereotype.Service;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-
-@Service
-public class DataBootstrapServiceImpl implements DataBootstrapService {
+@Component
+public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PrivilegeRepository privilegeRepository;
     private final UserRegistrationService userRegistrationService;
 
-    public DataBootstrapServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PrivilegeRepository privilegeRepository, UserRegistrationService userRegistrationService) {
+    private boolean alreadySetup = false;
+
+    public InitialDataLoader(UserRepository userRepository, RoleRepository roleRepository, PrivilegeRepository privilegeRepository, UserRegistrationService userRegistrationService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.privilegeRepository = privilegeRepository;
         this.userRegistrationService = userRegistrationService;
     }
 
-    @PostConstruct
-    public void init() {
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        if (alreadySetup)
+            return;
+
         if (userRepository.findAll().isEmpty()) {
             insertSeedData();
         }
+
+        alreadySetup = true;
     }
 
     private void insertSeedData() {
