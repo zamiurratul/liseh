@@ -1,6 +1,6 @@
 package com.liseh.bll.auth.service.impl;
 
-import com.liseh.bll.auth.model.UserPrinciple;
+import com.liseh.bll.auth.model.LisehUserPrincipal;
 import com.liseh.bll.exception.BaseException;
 import com.liseh.bll.persistence.entity.User;
 import com.liseh.bll.persistence.repository.UserRepository;
@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new BaseException("No user exists by username " + username);
         }
-        return new UserPrinciple(user);
+        return new LisehUserPrincipal(user);
     }
 }
 

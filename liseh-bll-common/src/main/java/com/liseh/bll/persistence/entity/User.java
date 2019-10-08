@@ -18,7 +18,7 @@ public class User {
     @SequenceGenerator(name = "user_seq_gen", allocationSize = 25, sequenceName = "user_seq")
     private Long id;
 
-    private String userIdentifier;
+    private String userId;
 
     private String firstName;
 
