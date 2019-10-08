@@ -26,7 +26,6 @@ public class SwaggerConfig {
                 .build()
                 .securitySchemes(Lists.newArrayList(new BasicAuth("basicAuth")))
                 .apiInfo(apiInfo());
-
     }
 
     @Bean
