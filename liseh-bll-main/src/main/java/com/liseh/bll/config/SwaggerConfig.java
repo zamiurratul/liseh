@@ -8,6 +8,7 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.BasicAuth;
 import springfox.documentation.service.SecurityScheme;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -23,15 +24,15 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build()
-//                .securitySchemes(Lists.newArrayList(apiKey()))
+                .securitySchemes(Lists.newArrayList(new BasicAuth("basicAuth")))
                 .apiInfo(apiInfo());
 
     }
 
-//    @Bean
-//    SecurityScheme apiKey() {
-//        return new ApiKey("token", "Authorization", "header");
-//    }
+    @Bean
+    SecurityScheme apiKey() {
+        return new ApiKey("token", "Authorization", "header");
+    }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
