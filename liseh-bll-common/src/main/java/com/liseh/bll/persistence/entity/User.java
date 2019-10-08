@@ -2,10 +2,7 @@ package com.liseh.bll.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.liseh.bll.common.type.Gender;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -49,11 +46,12 @@ public class User {
 
     private Boolean isActive;
 
+    @ToString.Exclude
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
     private List<Role> roles;
 
 

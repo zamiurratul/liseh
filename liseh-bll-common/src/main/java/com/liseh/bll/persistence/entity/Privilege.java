@@ -1,8 +1,10 @@
 package com.liseh.bll.persistence.entity;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,7 +18,11 @@ public class Privilege {
 
     private String name;
 
-    @ManyToMany(mappedBy = "privileges")
+    @ToString.Exclude
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    @JsonBackReference
+    @ManyToMany(mappedBy = "privileges", fetch = FetchType.LAZY)
     private List<Role> roles;
 
     public Privilege() {
@@ -26,5 +32,11 @@ public class Privilege {
     public Privilege(final String name) {
         super();
         this.name = name;
+    }
+
+    public List<Role> getRoles() {
+        if (roles == null)
+            roles = new ArrayList<>();
+        return roles;
     }
 }

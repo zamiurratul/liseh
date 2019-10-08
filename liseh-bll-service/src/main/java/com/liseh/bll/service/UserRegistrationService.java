@@ -5,4 +5,5 @@ import com.liseh.bll.persistence.entity.User;
 
 public interface UserRegistrationService {
     User registerNewUser(UserRegistrationDto userRegistrationDto);
+    User registerNewAdmin(UserRegistrationDto userRegistrationDto);
 }

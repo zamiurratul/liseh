@@ -14,7 +14,6 @@ import com.liseh.bll.utility.LogUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.Collections;
 
 @Service
 public class DataBootstrapServiceImpl implements DataBootstrapService {
@@ -39,19 +38,23 @@ public class DataBootstrapServiceImpl implements DataBootstrapService {
 
     private void insertSeedData() {
         try {
-            UserRegistrationDto userRegistrationDto = new UserRegistrationDto();
-            userRegistrationDto.setUsername("admin");
-            userRegistrationDto.setEmail("admin@liseh.com");
-            userRegistrationDto.setPassword("admin123");
-            userRegistrationService.registerNewUser(userRegistrationDto);
-
             Privilege privilege = new Privilege(PrivilegeType.ALL);
             privilegeRepository.saveAndFlush(privilege);
 
-            Role role = new Role(RoleType.USER);
-            role.setPrivileges(Collections.singletonList(privilege));
-            roleRepository.saveAndFlush(role);
+            Role userRole = new Role(RoleType.USER);
+            userRole.getPrivileges().add(privilege);
+            roleRepository.saveAndFlush(userRole);
 
+            Role adminRole = new Role(RoleType.ADMIN);
+            adminRole.getPrivileges().add(privilege);
+            roleRepository.saveAndFlush(adminRole);
+
+            UserRegistrationDto userRegistrationDto = new UserRegistrationDto();
+            userRegistrationDto.setUsername("admin");
+            userRegistrationDto.setEmail("admin@liseh.com");
+            userRegistrationDto.setPassword("admin");
+            userRegistrationDto.setDateOfBirth("22-FEB-1992");
+            userRegistrationService.registerNewAdmin(userRegistrationDto);
         } catch (Exception ex) {
             LogUtils.error("Failed to insert feed data. Cause: " + ex.getMessage());
         }
