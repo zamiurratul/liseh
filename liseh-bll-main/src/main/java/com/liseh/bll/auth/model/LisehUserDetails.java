@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class LisehUserPrincipal implements UserDetails {
+public class LisehUserDetails implements UserDetails {
     private User user;
 
-    public LisehUserPrincipal(User user) {
+    public LisehUserDetails(User user) {
         super();
         this.user = user;
     }

@@ -25,9 +25,8 @@ logging:
   file: ./logs/server.log
   level:
     root: INFO
-    com.robi.redshift: DEBUG
+    com.robi.redshift: INFO
+    org.apache.kafka: INFO
     org.springframework.kafka: ERROR
     org.hibernate.SQL: ERROR #To log the SQL queries & output the schema creation
     org.hibernate.type.descriptor.sql.BasicBinder: ERROR #To display hibernate sql parameter values
-    org.apache.kafka.clients.producer: ERROR
-    org.apache.kafka.clients.admin: ERROR
