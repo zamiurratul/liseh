@@ -22,6 +22,7 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 import java.util.HashMap;
 import java.util.Map;
 
+@EnableKafka
 @Configuration
 public class KafkaConfig {
     @Value("${spring.kafka.bootstrap-servers}")
@@ -64,11 +65,6 @@ public class KafkaConfig {
         return new DefaultKafkaConsumerFactory<>(configs,
                 new StringDeserializer(),
                 new JsonDeserializer<>(GenericKafkaObject.class));
-    }
-
-    @Bean
-    public KafkaTemplate<String, GenericKafkaObject> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
     }
 
     @Bean
