@@ -1,6 +1,5 @@
 package com.liseh;
 
-import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -31,17 +30,8 @@ public class KafkaConfig {
     @Value("${spring.kafka.consumer.group-id}")
     private String consumerGroupId;
 
-    @Value("${spring.kafka.request-topic-sync}")
-    private String requestTopicSync;
-
-    @Value("${spring.kafka.reply-topic-sync}")
-    private String replyTopicSync;
-
-    @Value("${spring.kafka.reply-topic-async}")
-    private String requestTopicAsync;
-
-    @Value("${spring.kafka.reply-topic-async}")
-    private String replyTopicAsync;
+    @Value("${liseh-bll-reply-topic-sync}")
+    private String bllReplyTopicSync;
 
     @Value("${spring.request-reply.timeout-ms}")
     private Long replyTimeout;
@@ -76,7 +66,7 @@ public class KafkaConfig {
 
     @Bean
     public KafkaMessageListenerContainer<String, GenericKafkaObject> kafkaMessageListenerContainer() {
-        ContainerProperties containerProperties = new ContainerProperties(replyTopicSync);
+        ContainerProperties containerProperties = new ContainerProperties(bllReplyTopicSync);
         return new KafkaMessageListenerContainer<>(consumerFactory(), containerProperties);
     }
 
@@ -84,7 +74,6 @@ public class KafkaConfig {
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, GenericKafkaObject>> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, GenericKafkaObject> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
-//        factory.setReplyTemplate(kafkaTemplate());
         factory.setReplyTemplate(replyingKafkaTemplate());
         return factory;
     }
