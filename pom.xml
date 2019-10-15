@@ -8,8 +8,6 @@
         <module>liseh-bll-main</module>
         <module>liseh-bll-service</module>
         <module>liseh-bll-service-impl</module>
-        <module>liseh-bll-producer</module>
-        <module>liseh-bll-producer-impl</module>
         <module>liseh-bll-repository</module>
         <module>liseh-bll-security</module>
     </modules>
