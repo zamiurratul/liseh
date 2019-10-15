@@ -1,5 +1,6 @@
 package com.liseh;
 
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -76,5 +77,54 @@ public class KafkaConfig {
         factory.setConsumerFactory(consumerFactory());
         factory.setReplyTemplate(replyingKafkaTemplate());
         return factory;
+    }
+
+    @Bean
+    public KafkaAdmin admin() {
+        Map<String, Object> configs = new HashMap<>();
+        configs.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        return new KafkaAdmin(configs);
+    }
+
+    @Bean
+    public NewTopic topic1() {
+        Map<String, String> configs = new HashMap<>();
+        configs.put("retention.ms", replyTimeout.toString());
+        return new NewTopic("liseh-auth-request-topic-async", 1, (short) 1).configs(configs);
+    }
+
+    @Bean
+    public NewTopic topic2() {
+        Map<String, String> configs = new HashMap<>();
+        configs.put("retention.ms", replyTimeout.toString());
+        return new NewTopic("liseh-auth-request-topic-sync", 1, (short) 1).configs(configs);
+    }
+
+    @Bean
+    public NewTopic topic3() {
+        Map<String, String> configs = new HashMap<>();
+        configs.put("retention.ms", replyTimeout.toString());
+        return new NewTopic("liseh-auth-reply-topic-sync", 1, (short) 1).configs(configs);
+    }
+
+    @Bean
+    public NewTopic topic4() {
+        Map<String, String> configs = new HashMap<>();
+        configs.put("retention.ms", replyTimeout.toString());
+        return new NewTopic("liseh-bll-request-topic-async", 1, (short) 1).configs(configs);
+    }
+
+    @Bean
+    public NewTopic topic5() {
+        Map<String, String> configs = new HashMap<>();
+        configs.put("retention.ms", replyTimeout.toString());
+        return new NewTopic("liseh-bll-request-topic-sync", 1, (short) 1).configs(configs);
+    }
+
+    @Bean
+    public NewTopic topic6() {
+        Map<String, String> configs = new HashMap<>();
+        configs.put("retention.ms", replyTimeout.toString());
+        return new NewTopic("liseh-bll-reply-topic-sync", 1, (short) 1).configs(configs);
     }
 }
