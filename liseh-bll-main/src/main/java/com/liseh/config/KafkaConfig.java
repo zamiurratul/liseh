@@ -1,5 +1,6 @@
-package com.liseh;
+package com.liseh.config;
 
+import com.liseh.GenericKafkaObject;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -32,10 +33,29 @@ public class KafkaConfig {
     private String consumerGroupId;
 
     @Value("${liseh-bll-reply-topic-sync}")
-    private String bllReplyTopicSync;
+    private String replyTopic;
 
     @Value("${spring.request-reply.timeout-ms}")
     private Long replyTimeout;
+
+    @Bean
+    public ConsumerFactory<String, GenericKafkaObject> consumerFactory() {
+        Map<String, Object> configs = new HashMap<>();
+        configs.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        configs.put(ConsumerConfig.GROUP_ID_CONFIG, consumerGroupId);
+        return new DefaultKafkaConsumerFactory<>(configs,
+                new StringDeserializer(),
+                new JsonDeserializer<>(GenericKafkaObject.class));
+    }
+
+    @Bean
+    public ReplyingKafkaTemplate<String, GenericKafkaObject, GenericKafkaObject> replyingKafkaTemplate(ProducerFactory<String, GenericKafkaObject> pf, KafkaMessageListenerContainer<String, GenericKafkaObject> container) {
+        ReplyingKafkaTemplate<String, GenericKafkaObject, GenericKafkaObject> replyingTemplate = new ReplyingKafkaTemplate<>(pf, container);
+        replyingTemplate.setReplyTimeout(replyTimeout);
+        return replyingTemplate;
+    }
 
     @Bean
     public ProducerFactory<String, GenericKafkaObject> producerFactory() {
@@ -47,35 +67,16 @@ public class KafkaConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, GenericKafkaObject> consumerFactory() {
-        Map<String, Object> configs = new HashMap<>();
-        configs.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-//        configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-//        configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        configs.put(ConsumerConfig.GROUP_ID_CONFIG, consumerGroupId);
-        return new DefaultKafkaConsumerFactory<>(configs,
-                new StringDeserializer(),
-                new JsonDeserializer<>(GenericKafkaObject.class));
-    }
-
-    @Bean
-    public ReplyingKafkaTemplate<String, GenericKafkaObject, GenericKafkaObject> replyingKafkaTemplate() {
-        ReplyingKafkaTemplate<String, GenericKafkaObject, GenericKafkaObject> replyingTemplate = new ReplyingKafkaTemplate<>(producerFactory(), kafkaMessageListenerContainer());
-        replyingTemplate.setReplyTimeout(replyTimeout);
-        return replyingTemplate;
-    }
-
-    @Bean
-    public KafkaMessageListenerContainer<String, GenericKafkaObject> kafkaMessageListenerContainer() {
-        ContainerProperties containerProperties = new ContainerProperties(bllReplyTopicSync);
-        return new KafkaMessageListenerContainer<>(consumerFactory(), containerProperties);
+    public KafkaMessageListenerContainer<String, GenericKafkaObject> kafkaMessageListenerContainer(ConsumerFactory<String, GenericKafkaObject> cf) {
+        ContainerProperties props = new ContainerProperties(replyTopic);
+        return new KafkaMessageListenerContainer<>(cf, props);
     }
 
     @Bean
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, GenericKafkaObject>> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, GenericKafkaObject> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
-        factory.setReplyTemplate(replyingKafkaTemplate());
+        factory.setReplyTemplate(replyingKafkaTemplate(producerFactory(), kafkaMessageListenerContainer(consumerFactory())));
         return factory;
     }
 

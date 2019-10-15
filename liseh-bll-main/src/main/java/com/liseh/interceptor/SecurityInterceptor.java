@@ -1,4 +1,4 @@
-package com.liseh.bll.interceptor;
+package com.liseh.interceptor;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;

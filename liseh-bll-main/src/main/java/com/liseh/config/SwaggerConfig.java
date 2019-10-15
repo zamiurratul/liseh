@@ -1,4 +1,4 @@
-package com.liseh.bll.config;
+package com.liseh.config;
 
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;

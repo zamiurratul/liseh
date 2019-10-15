@@ -1,11 +1,12 @@
-package com.liseh;
+package com.liseh.bll.kafka;
 
+import com.liseh.GenericKafkaObject;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
 
 @Component
-public class KafkaMessageListener {
+public class MessageListener {
     @KafkaListener(topics = "${liseh-auth-request-topic-async}", autoStartup = "${kafka.listen.auto.start}")
     public void listenAsync(GenericKafkaObject request) throws InterruptedException {
         System.out.println("Async Received: " + request.toString());

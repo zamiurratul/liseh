@@ -1,4 +1,4 @@
-package com.liseh.bll.config;
+package com.liseh.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

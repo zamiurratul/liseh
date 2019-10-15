@@ -1,6 +1,6 @@
-package com.liseh.bll.config;
+package com.liseh.config;
 
-import com.liseh.bll.interceptor.SecurityInterceptor;
+import com.liseh.interceptor.SecurityInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
