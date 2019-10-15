@@ -44,7 +44,13 @@ public class MessageExchangeServiceImpl implements MessageExchangeService {
     }
 
     @Override
-    public void sendMessage(GenericKafkaObject request) throws InterruptedException, ExecutionException {
+    public void sendMessage(GenericKafkaObject request) {
+        kafkaTemplate.send(bllRequestTopicAsync, request);
+    }
+
+    @Override
+    public void sendMessage(String eventType, String eventName, String content) {
+        GenericKafkaObject request = new GenericKafkaObject(eventType, eventName, content);
         kafkaTemplate.send(bllRequestTopicAsync, request);
     }
 }

@@ -66,7 +66,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js",
-                        "/ws/**").permitAll()
+                        "/ws/**",
+                        "/**/registration").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();

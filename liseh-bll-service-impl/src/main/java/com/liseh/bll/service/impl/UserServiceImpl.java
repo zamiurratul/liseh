@@ -1,5 +1,9 @@
 package com.liseh.bll.service.impl;
 
+import com.liseh.GenericKafkaObject;
+import com.liseh.bll.constant.EventType;
+import com.liseh.bll.constant.UserEvent;
+import com.liseh.bll.persistence.dto.UserDto;
 import com.liseh.bll.persistence.dto.UserStatusDto;
 import com.liseh.bll.persistence.entity.UserStatus;
 import com.liseh.bll.persistence.repository.RoleRepository;
@@ -9,9 +13,10 @@ import com.liseh.bll.constant.DateFormat;
 import com.liseh.bll.persistence.dto.UserRegistrationDto;
 import com.liseh.bll.persistence.entity.User;
 import com.liseh.bll.persistence.repository.UserStatusRepository;
+import com.liseh.bll.service.MessageExchangeService;
 import com.liseh.bll.service.UserRegistrationService;
 import com.liseh.bll.service.UserStatusService;
-import com.liseh.bll.utility.CommonUtils;
+import com.liseh.bll.utility.CommonUtil;
 import com.liseh.bll.utility.DateUtils;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -30,6 +35,7 @@ public class UserServiceImpl implements UserRegistrationService, UserStatusServi
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final UserStatusRepository userStatusRepository;
+    private final MessageExchangeService messageExchangeService;
 
     private PropertyMap<UserRegistrationDto, User> skipFields = new PropertyMap<UserRegistrationDto, User>() {
         @Override
@@ -39,38 +45,45 @@ public class UserServiceImpl implements UserRegistrationService, UserStatusServi
         }
     };
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleRepository roleRepository, UserStatusRepository userStatusRepository) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleRepository roleRepository, UserStatusRepository userStatusRepository, MessageExchangeService messageExchangeService) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
         this.userStatusRepository = userStatusRepository;
+        this.messageExchangeService = messageExchangeService;
         this.modelMapper.addMappings(skipFields);
     }
 
     @Override
-    public User registerNewUser(UserRegistrationDto userRegistrationDto) {
+    public void registerNewUser(UserRegistrationDto userRegistrationDto) {
         User user = modelMapper.map(userRegistrationDto, User.class);
-        user.setUserId(CommonUtils.randomUUID());
+        user.setUserId(CommonUtil.randomUUID());
         user.setIsVerified(false);
         user.setIsActive(true);
         user.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword()));
         user.setDateOfBirth(DateUtils.parseDate(userRegistrationDto.getDateOfBirth(), DateFormat.DD_MMM_YYYY));
         user.getRoles().add(roleRepository.findByName(RoleType.USER));
-        return userRepository.save(user);
+        userRepository.saveAndFlush(user);
+
+        UserDto userDto = new UserDto();
+        userDto.setUserId(user.getUserId());
+        userDto.setUsername(user.getUsername());
+        userDto.setPassword(userRegistrationDto.getPassword());
+        messageExchangeService.sendMessage(EventType.USER, UserEvent.USER_REGISTRATION, CommonUtil.getJsonString(userDto));
     }
 
     @Override
-    public User registerNewAdmin(UserRegistrationDto userRegistrationDto) {
+    public void registerNewAdmin(UserRegistrationDto userRegistrationDto) {
         User user = modelMapper.map(userRegistrationDto, User.class);
-        user.setUserId(CommonUtils.randomUUID());
+        user.setUserId(CommonUtil.randomUUID());
         user.setIsVerified(true);
         user.setIsActive(true);
         user.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword()));
         user.setDateOfBirth(DateUtils.parseDate("07-OCT-2019", DateFormat.DD_MMM_YYYY));
         user.getRoles().add(roleRepository.findByName(RoleType.USER));
         user.getRoles().add(roleRepository.findByName(RoleType.ADMIN));
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Override
@@ -81,7 +94,7 @@ public class UserServiceImpl implements UserRegistrationService, UserStatusServi
 
         UserStatus userStatus = modelMapper.map(userStatusDto, UserStatus.class);
         userStatus.setUserId(user.getUserId());
-        userStatus.setStatusId(CommonUtils.randomUUID());
+        userStatus.setStatusId(CommonUtil.randomUUID());
 
         return userStatusRepository.save(userStatus);
     }

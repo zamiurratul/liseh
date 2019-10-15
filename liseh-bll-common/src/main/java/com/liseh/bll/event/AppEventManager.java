@@ -2,11 +2,14 @@ package com.liseh.bll.event;
 
 import com.liseh.bll.utility.LogUtils;
 import lombok.Data;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class AppEventManager {
+    private static final Logger logger = LogManager.getLogger(AppEventManager.class);
     private static Map<String, List<AppEvent>> eventRegistry = new ConcurrentHashMap<>();
 
     public static void register(String eventName, EventCallback eventCallback) {
@@ -39,8 +42,8 @@ public class AppEventManager {
                 try {
                     appEvent.getEventCallback().callback();
                 } catch (Exception ex) {
-                    String message = String.format("Event %s on class %s. Cause: %s", eventName, appEvent.getClazz(), ex.getMessage());
-                    LogUtils.error(message);
+                    String message = String.format("Event %s on class %s.", eventName, appEvent.getClazz());
+                    LogUtils.error(logger, "FireAppEvent", message, ex.getMessage());
                 }
             });
         }
